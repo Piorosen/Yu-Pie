@@ -217,5 +217,16 @@ namespace YuPie
                 }
             }
         }
+
+        private void listBox_MusicList_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (listBox_MusicList.SelectedIndex != -1)
+            {
+                if (e.KeyCode == Keys.Enter)
+                {
+                    System.Diagnostics.Process.Start("https://www.youtube.com/watch?v=" + musiclists[listBox_MusicList.SelectedItem.ToString()].Snippet.ResourceId.VideoId);
+                }
+            }
+        }
     }
 }

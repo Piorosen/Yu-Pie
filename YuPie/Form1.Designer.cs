@@ -116,6 +116,7 @@
             this.listBox_MusicList.Name = "listBox_MusicList";
             this.listBox_MusicList.Size = new System.Drawing.Size(574, 244);
             this.listBox_MusicList.TabIndex = 7;
+            this.listBox_MusicList.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listBox_MusicList_KeyDown);
             // 
             // button4
             // 
