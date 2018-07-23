@@ -6,6 +6,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -30,6 +31,12 @@ namespace YuPie
 
 
         string Global_DriveAuth = Application.StartupPath + "\\";
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
         public Form1()
         {
             InitializeComponent();
@@ -55,14 +62,12 @@ namespace YuPie
 
             var playlist = list.Execute();
             var tmp = playlist.Items.ToList();
-            
+
             foreach (var data in tmp)
             {
                 playlists[data.Snippet.Title] = data;
                 listBox_Playlist.Items.Add(data.Snippet.Title);
             }
-
-
         }
 
         private void listBox_Playlist_SelectedIndexChanged(object sender, EventArgs e)
@@ -97,39 +102,57 @@ namespace YuPie
                 fi.Delete();
             }
 
-            UserCredential credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
-                new ClientSecrets { ClientSecret = "6z6zVtE5GaUY8h2ySRKj95Co", ClientId = "1032108029526-bgim3s61a8kqd7jfq1jdoshm8avh0i9q.apps.googleusercontent.com" }
-                , new string[] { YouTubeService.Scope.Youtube }
-                , "user"
-                , CancellationToken.None
-                , new FileDataStore(Global_DriveAuth, true)).Result;
+            Application.Restart();
+        }
 
-            Service = new YouTubeService(new BaseClientService.Initializer()
+        private const string YoutubeLinkRegex = "(?:.+?)?(?:\\/v\\/|watch\\/|\\?v=|\\&v=|youtu\\.be\\/|\\/v=|^youtu\\.be\\/)([a-zA-Z0-9_-]{11})+";
+
+        string GetVideoId(string input)
+        {
+            var regex = new Regex(YoutubeLinkRegex, RegexOptions.Compiled);
+            foreach (Match match in regex.Matches(input))
             {
-
-                HttpClientInitializer = credential,
-                ApplicationName = GetType().ToString()
-            });
-            
+                //Console.WriteLine(match);
+                foreach (var groupdata in match.Groups.Cast<Group>().Where(groupdata => !groupdata.ToString().StartsWith("http://") && !groupdata.ToString().StartsWith("https://") && !groupdata.ToString().StartsWith("youtu") && !groupdata.ToString().StartsWith("www.")))
+                {
+                    return groupdata.ToString();
+                }
+            }
+            return string.Empty;
         }
 
         private void button1_Click_1(object sender, EventArgs e)
         {
-            var count = textBox1.Text.Split('\r');
-            for (int i = 0; i < count.Length; i++)
+            var count = Regex.Split(textBox1.Text, "\r\n");
+
+            try
             {
-                PlaylistItem playlistItem = new PlaylistItem();
-                playlistItem.Snippet = new PlaylistItemSnippet();
-                playlistItem.Snippet.PlaylistId = playlists[listBox_Playlist.SelectedItem.ToString()].Id;
-                playlistItem.Snippet.ResourceId = new ResourceId();
-                playlistItem.Snippet.ResourceId.VideoId = count[i].Split('/')[3];
-                playlistItem.Snippet.ResourceId.Kind = "youtube#video";
+                if (listBox_Playlist.SelectedIndex == -1)
+                {
+                    MessageBox.Show("어느 플레이 리스트 에 추가할것인지 체크 해주세요.");
+                }
 
-                playlistItem = Service.PlaylistItems.Insert(playlistItem, "snippet").Execute();
-                listBox_MusicList.Items.Add(playlistItem.Snippet.Title);
-                musiclists[playlistItem.Snippet.Title] = playlistItem;
+                for (int i = 0; i < count.Length; i++)
+                {
+                    if (count[i] == String.Empty)
+                    {
+                        continue;
+                    }
+                    PlaylistItem playlistItem = new PlaylistItem();
+                    playlistItem.Snippet = new PlaylistItemSnippet();
+                    playlistItem.Snippet.PlaylistId = playlists[listBox_Playlist.SelectedItem.ToString()].Id;
+                    playlistItem.Snippet.ResourceId = new ResourceId();
+                    playlistItem.Snippet.ResourceId.VideoId = GetVideoId(count[i]).Trim();
+                    playlistItem.Snippet.ResourceId.Kind = "youtube#video";
+
+                    playlistItem = Service.PlaylistItems.Insert(playlistItem, "snippet").Execute();
+                    listBox_MusicList.Items.Add(playlistItem.Snippet.Title);
+                    musiclists[playlistItem.Snippet.Title] = playlistItem;
+                }
+            }catch (Exception e1)
+            {
+                MessageBox.Show(e1.ToString());
             }
-
 
         }
 
@@ -159,6 +182,10 @@ namespace YuPie
                 musiclists.Remove(listBox_MusicList.SelectedItem.ToString());
                 listBox_MusicList.Items.Remove(listBox_MusicList.SelectedItem.ToString());
             }
+        }
+
+        private void Form1_Resize(object sender, EventArgs e)
+        {
         }
     }
 }

@@ -45,22 +45,23 @@
             this.listBox_Playlist.ItemHeight = 12;
             this.listBox_Playlist.Location = new System.Drawing.Point(12, 12);
             this.listBox_Playlist.Name = "listBox_Playlist";
-            this.listBox_Playlist.Size = new System.Drawing.Size(210, 172);
+            this.listBox_Playlist.Size = new System.Drawing.Size(308, 172);
             this.listBox_Playlist.TabIndex = 0;
             this.listBox_Playlist.SelectedIndexChanged += new System.EventHandler(this.listBox_Playlist_SelectedIndexChanged);
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(477, 12);
+            this.textBox1.Location = new System.Drawing.Point(906, 12);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(184, 244);
+            this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.textBox1.Size = new System.Drawing.Size(304, 244);
             this.textBox1.TabIndex = 1;
             this.textBox1.Text = "추가";
             // 
             // Btn_Oath
             // 
-            this.Btn_Oath.Location = new System.Drawing.Point(538, 306);
+            this.Btn_Oath.Location = new System.Drawing.Point(1093, 306);
             this.Btn_Oath.Name = "Btn_Oath";
             this.Btn_Oath.Size = new System.Drawing.Size(123, 38);
             this.Btn_Oath.TabIndex = 2;
@@ -70,9 +71,9 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(477, 262);
+            this.button1.Location = new System.Drawing.Point(906, 262);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(187, 38);
+            this.button1.Size = new System.Drawing.Size(307, 38);
             this.button1.TabIndex = 3;
             this.button1.Text = "추가";
             this.button1.UseVisualStyleBackColor = true;
@@ -82,7 +83,7 @@
             // 
             this.TextBox_PlayListCreate.Location = new System.Drawing.Point(12, 235);
             this.TextBox_PlayListCreate.Name = "TextBox_PlayListCreate";
-            this.TextBox_PlayListCreate.Size = new System.Drawing.Size(210, 21);
+            this.TextBox_PlayListCreate.Size = new System.Drawing.Size(308, 21);
             this.TextBox_PlayListCreate.TabIndex = 4;
             this.TextBox_PlayListCreate.Text = "만드는거 ";
             // 
@@ -98,7 +99,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(120, 199);
+            this.button3.Location = new System.Drawing.Point(218, 199);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(102, 23);
             this.button3.TabIndex = 6;
@@ -110,16 +111,16 @@
             // 
             this.listBox_MusicList.FormattingEnabled = true;
             this.listBox_MusicList.ItemHeight = 12;
-            this.listBox_MusicList.Location = new System.Drawing.Point(228, 12);
+            this.listBox_MusicList.Location = new System.Drawing.Point(326, 12);
             this.listBox_MusicList.Name = "listBox_MusicList";
-            this.listBox_MusicList.Size = new System.Drawing.Size(222, 244);
+            this.listBox_MusicList.Size = new System.Drawing.Size(574, 244);
             this.listBox_MusicList.TabIndex = 7;
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(228, 262);
+            this.button4.Location = new System.Drawing.Point(326, 262);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(222, 38);
+            this.button4.Size = new System.Drawing.Size(574, 38);
             this.button4.TabIndex = 8;
             this.button4.Text = "삭제";
             this.button4.UseVisualStyleBackColor = true;
@@ -129,7 +130,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(679, 357);
+            this.ClientSize = new System.Drawing.Size(1228, 357);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.listBox_MusicList);
             this.Controls.Add(this.button3);
@@ -141,6 +142,8 @@
             this.Controls.Add(this.listBox_Playlist);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Form1_Load);
+            this.Resize += new System.EventHandler(this.Form1_Resize);
             this.ResumeLayout(false);
             this.PerformLayout();
 
