@@ -205,5 +205,17 @@ namespace YuPie
         private void Form1_Resize(object sender, EventArgs e)
         {
         }
+
+        private void listBox_Playlist_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (listBox_Playlist.SelectedIndex != -1)
+            {
+                if (e.KeyCode == Keys.Enter)
+                {
+                    string str = listBox_Playlist.SelectedItem.ToString();
+                    System.Diagnostics.Process.Start("https://www.youtube.com/playlist?list=" + playlists[str].Id);
+                }
+            }
+        }
     }
 }

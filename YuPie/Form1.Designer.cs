@@ -48,6 +48,7 @@
             this.listBox_Playlist.Size = new System.Drawing.Size(308, 172);
             this.listBox_Playlist.TabIndex = 0;
             this.listBox_Playlist.SelectedIndexChanged += new System.EventHandler(this.listBox_Playlist_SelectedIndexChanged);
+            this.listBox_Playlist.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listBox_Playlist_KeyDown);
             // 
             // textBox1
             // 
