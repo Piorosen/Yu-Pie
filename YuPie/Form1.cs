@@ -138,11 +138,29 @@ namespace YuPie
                     {
                         continue;
                     }
+                    string videoID = GetVideoId(count[i]).Trim();
+
+                    foreach (var data in musiclists.Values)
+                    {
+                        if (data.Snippet.ResourceId.VideoId == videoID)
+                        {
+                            if (MessageBox.Show(count[i] + "해당 동영상은 이미 추가되어 있습니다.\n계속 하시겠습니까?", "오류", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                            {
+                                continue;
+                            }
+                            else
+                            {
+                                return;
+                            }
+                        }
+                    }
+                    
+
                     PlaylistItem playlistItem = new PlaylistItem();
                     playlistItem.Snippet = new PlaylistItemSnippet();
                     playlistItem.Snippet.PlaylistId = playlists[listBox_Playlist.SelectedItem.ToString()].Id;
                     playlistItem.Snippet.ResourceId = new ResourceId();
-                    playlistItem.Snippet.ResourceId.VideoId = GetVideoId(count[i]).Trim();
+                    playlistItem.Snippet.ResourceId.VideoId = 
                     playlistItem.Snippet.ResourceId.Kind = "youtube#video";
 
                     playlistItem = Service.PlaylistItems.Insert(playlistItem, "snippet").Execute();
