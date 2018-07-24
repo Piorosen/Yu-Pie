@@ -130,6 +130,7 @@ namespace YuPie
                 if (listBox_Playlist.SelectedIndex == -1)
                 {
                     MessageBox.Show("어느 플레이 리스트 에 추가할것인지 체크 해주세요.");
+                    return;
                 }
 
                 for (int i = 0; i < count.Length; i++)
@@ -160,7 +161,7 @@ namespace YuPie
                     playlistItem.Snippet = new PlaylistItemSnippet();
                     playlistItem.Snippet.PlaylistId = playlists[listBox_Playlist.SelectedItem.ToString()].Id;
                     playlistItem.Snippet.ResourceId = new ResourceId();
-                    playlistItem.Snippet.ResourceId.VideoId = 
+                    playlistItem.Snippet.ResourceId.VideoId = videoID;
                     playlistItem.Snippet.ResourceId.Kind = "youtube#video";
 
                     playlistItem = Service.PlaylistItems.Insert(playlistItem, "snippet").Execute();
